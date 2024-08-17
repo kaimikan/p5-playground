@@ -1,9 +1,15 @@
 var rocket;
 var population;
-var lifespan = 200;
+var lifespan = 375;
 var lifeP;
 var count = 0;
 var target;
+var maxForce = 0.25;
+
+var recX = 250;
+var recY = 350;
+var recW = 200;
+var recH = 10;
 
 function setup() {
   createCanvas(700, 650);
@@ -24,6 +30,8 @@ function draw() {
     population.naturalSelection();
     count = 0;
   }
+  fill(255);
+  rect(recX, recY, recW, recH);
 
   ellipse(target.x, target.y, 16, 16);
 }
@@ -35,7 +43,7 @@ function DNA(genes) {
     this.genes = [];
     for (let i = 0; i < lifespan; i++) {
       this.genes[i] = p5.Vector.random2D();
-      this.genes[i].setMag(0.15);
+      this.genes[i].setMag(maxForce);
     }
   }
 
@@ -56,7 +64,7 @@ function DNA(genes) {
     for (let i = 0; i < this.genes.length; i++) {
       if (random(1) < 0.05) {
         this.genes[i] = p5.Vector.random2D();
-        this.genes[i].setMag(0.15);
+        this.genes[i].setMag(maxForce);
       }
     }
   };
@@ -119,6 +127,7 @@ function Rocket(dna) {
   this.acc = createVector();
   this.hasReachedTarget = false;
   this.targetReachTime = 9999;
+  this.crashed = false;
   if (dna) {
     this.dna = dna;
   } else {
@@ -139,6 +148,9 @@ function Rocket(dna) {
       this.fitness += speed * 10;
       this.fitness *= 5;
     }
+    if (this.crashed) {
+      this.fitness /= 50;
+    }
   };
 
   this.update = function () {
@@ -151,12 +163,30 @@ function Rocket(dna) {
       this.pos = target.copy();
     }
 
+    if (
+      this.pos.x > recX &&
+      this.pos.x < recX + recW &&
+      this.pos.y > recY &&
+      this.pos.y < recY + recH
+    ) {
+      this.crashed = true;
+    }
+
+    if (this.pos.x > width || this.pos.x < 0) {
+      this.crashed = true;
+    }
+
+    if (this.pos.y > height || this.pos.y < 0) {
+      this.crashed = true;
+    }
+
     this.applyForce(this.dna.genes[count]);
 
-    if (!this.hasReachedTarget) {
+    if (!this.hasReachedTarget && !this.crashed) {
       this.vel.add(this.acc);
       this.pos.add(this.vel);
       this.acc.mult(0);
+      this.vel.limit(4);
     }
   };
 
