@@ -1,0 +1,3 @@
+Following "Coding Challenge #143: Quicksort Visualization" on YouTube by The Coding Train
+
+This is the Lomuto Partition Scheme
