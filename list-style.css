@@ -1,0 +1,106 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #212121, #3b3b3b);
+  color: #dadada;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+
+#list-container {
+  background: #a5a5a5;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  text-align: center;
+  position: relative;
+}
+
+h2 {
+  margin: -20px -20px 0px -20px; /* Offsets the padding of #list-container */
+  color: #eeeeee;
+  width: 500px + 40px;
+  position: sticky; /* Keeps the heading fixed while scrolling */
+  top: 0;
+  background-color: #4f4f4f;
+  z-index: 1;
+  padding: 10px 0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+#scrollable-content {
+  max-height: 70vh; /* Adjusted to account for the h2 height */
+  overflow-y: auto;
+  /* border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px; */
+  padding-right: 20px; /* Adds space inside the scrollable area */
+  margin-right: -20px; /* Shifts scrollbar visually to the edge */
+}
+
+/* Custom scrollbar styling */
+#scrollable-content::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  margin-right: -20px; /* Offsets the padding of #list-container */
+}
+
+#scrollable-content::-webkit-scrollbar-track {
+  background: #515151; /* Background of the scrollbar track */
+  border-radius: 10px; /* Rounded track */
+}
+
+#scrollable-content::-webkit-scrollbar-thumb {
+  background: #515151; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded thumb */
+}
+
+#scrollable-content::-webkit-scrollbar-thumb:hover {
+  background: #3f3f3f; /* Thumb color on hover */
+}
+
+/* Firefox scrollbar styling */
+#scrollable-content {
+  scrollbar-width: thin; /* Makes scrollbar thinner */
+  scrollbar-color: #515151 #3f3f3f; /* Thumb and track color for Firefox */
+}
+
+ul {
+  padding: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  display: block; /* Makes the anchor fill the entire list item */
+  padding: 10px;
+  color: #dadada;
+  text-decoration: none;
+  border-radius: 8px;
+  background: rgb(56, 56, 56);
+  transition: background 0.3s, transform 0.3s;
+  transition: color 0.3s, transform 0.3s;
+}
+
+a:hover {
+  background: #d1d1d1;
+  color: #181818;
+  /* transform: translateX(5px); */
+}
+
+a:active {
+  transform: scale(0.98);
+}
+
+li {
+  margin: 5px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+}
