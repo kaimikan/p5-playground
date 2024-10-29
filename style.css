@@ -9,10 +9,3 @@ body {
 a {
   color: #3685c5;
 }
-
-#back-to-main-page {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 999;
-}

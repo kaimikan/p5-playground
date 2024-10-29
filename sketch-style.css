@@ -1,0 +1,29 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #1b1b1b;
+  font-family: Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
+}
+
+a {
+  color: #3685c5;
+}
+
+#back-to-main-page {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 999;
+}

@@ -27,8 +27,6 @@ function draw() {
     wall.show();
   }
 
-  console.log(width, height);
-  console.log(mouseX, mouseY);
   if (0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height) {
     // move with mouse
     particle.update(mouseX, mouseY);
