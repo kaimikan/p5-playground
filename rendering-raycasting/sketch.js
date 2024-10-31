@@ -7,6 +7,11 @@ let yOffset = 10000;
 const sceneW = 400;
 const sceneH = 400;
 let fovSlider;
+let fovDisplayP;
+let initialFOV = 45;
+let userManualP;
+let perlinNoiseToggleButton;
+let isMovementManual = true;
 
 function setup() {
   createCanvas(sceneW * 2, sceneH);
@@ -23,13 +28,37 @@ function setup() {
   walls.push(new Boundary(sceneW, sceneH, 0, sceneH));
   walls.push(new Boundary(0, sceneH, 0, 0));
   particle = new Particle();
+
+  fovDisplayP = createP(`Current FOV: ${initialFOV}`);
+  fovDisplayP.style('color', 'white');
+
   fovSlider = createSlider(0, 360, 45);
   fovSlider.input(changeFOV);
+
+  userManualP = createP(
+    '<b>Manual mode:</b> move with mouse and rotate with ← → OR control with ↑ ↓ ← → when the mouse is outside of the canvas'
+  );
+  userManualP.style('color', 'grey');
+
+  perlinNoiseToggleButton = createButton(
+    isMovementManual ? 'Auto Movement: OFF' : 'Auto Movement: ON'
+  );
+  perlinNoiseToggleButton.position(CENTER, 50);
+  perlinNoiseToggleButton.mousePressed(toggleAutoMovement);
+}
+
+function toggleAutoMovement() {
+  isMovementManual = !isMovementManual;
+  let buttonLabel = isMovementManual
+    ? 'Auto Movement: OFF'
+    : 'Auto Movement: ON';
+  perlinNoiseToggleButton.html(buttonLabel);
 }
 
 function changeFOV() {
   const fov = fovSlider.value();
   particle.updateFOV(fov);
+  fovDisplayP.html('Current FOV:' + fov);
 }
 
 function draw() {
@@ -46,27 +75,29 @@ function draw() {
   }
 
   let scene;
-  if (0 < mouseX && mouseX < sceneW && 0 < mouseY && mouseY < sceneH) {
-    // move with mouse
-    particle.update(mouseX, mouseY);
-  } else if (
-    keyIsDown(UP_ARROW) ||
-    keyIsDown(DOWN_ARROW) ||
-    keyIsDown(LEFT_ARROW) ||
-    keyIsDown(RIGHT_ARROW)
-  ) {
-    if (keyIsDown(DOWN_ARROW)) {
-      particle.move(-1);
+  if (isMovementManual) {
+    if (0 < mouseX && mouseX < sceneW && 0 < mouseY && mouseY < sceneH) {
+      // move with mouse
+      particle.update(mouseX, mouseY);
+    } else if (
+      keyIsDown(UP_ARROW) ||
+      keyIsDown(DOWN_ARROW) ||
+      keyIsDown(LEFT_ARROW) ||
+      keyIsDown(RIGHT_ARROW)
+    ) {
+      if (keyIsDown(DOWN_ARROW)) {
+        particle.move(-1);
+      }
+      if (keyIsDown(UP_ARROW)) {
+        particle.move(1);
+      }
     }
-    if (keyIsDown(UP_ARROW)) {
-      particle.move(1);
-    }
-  } //else {
-  //   // move with perlin noise
-  //   particle.update(noise(xOffset) * sceneW, noise(yOffset) * sceneH);
-  //   xOffset += 0.01;
-  //   yOffset += 0.01;
-  // }
+  } else {
+    // move with perlin noise
+    particle.update(noise(xOffset) * sceneW, noise(yOffset) * sceneH);
+    xOffset += 0.01;
+    yOffset += 0.01;
+  }
   scene = particle.look(walls);
 
   const w = sceneW / scene.length;
