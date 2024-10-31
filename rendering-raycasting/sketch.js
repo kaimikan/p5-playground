@@ -6,6 +6,7 @@ let yOffset = 10000;
 
 const sceneW = 400;
 const sceneH = 400;
+let fovSlider;
 
 function setup() {
   createCanvas(sceneW * 2, sceneH);
@@ -22,6 +23,13 @@ function setup() {
   walls.push(new Boundary(sceneW, sceneH, 0, sceneH));
   walls.push(new Boundary(0, sceneH, 0, 0));
   particle = new Particle();
+  fovSlider = createSlider(0, 360, 45);
+  fovSlider.input(changeFOV);
+}
+
+function changeFOV() {
+  const fov = fovSlider.value();
+  particle.updateFOV(fov);
 }
 
 function draw() {
@@ -31,34 +39,48 @@ function draw() {
   }
 
   if (keyIsDown(LEFT_ARROW)) {
-    particle.rotate(0.1);
-  } else if (keyIsDown(RIGHT_ARROW)) {
     particle.rotate(-0.1);
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    particle.rotate(0.1);
   }
 
   let scene;
   if (0 < mouseX && mouseX < sceneW && 0 < mouseY && mouseY < sceneH) {
     // move with mouse
     particle.update(mouseX, mouseY);
-    scene = particle.look(walls);
-  } else {
-    // move with perlin noise
-    particle.update(noise(xOffset) * sceneW, noise(yOffset) * sceneH);
-    xOffset += 0.01;
-    yOffset += 0.01;
-    scene = particle.look(walls);
-  }
+  } else if (
+    keyIsDown(UP_ARROW) ||
+    keyIsDown(DOWN_ARROW) ||
+    keyIsDown(LEFT_ARROW) ||
+    keyIsDown(RIGHT_ARROW)
+  ) {
+    if (keyIsDown(DOWN_ARROW)) {
+      particle.move(-1);
+    }
+    if (keyIsDown(UP_ARROW)) {
+      particle.move(1);
+    }
+  } //else {
+  //   // move with perlin noise
+  //   particle.update(noise(xOffset) * sceneW, noise(yOffset) * sceneH);
+  //   xOffset += 0.01;
+  //   yOffset += 0.01;
+  // }
+  scene = particle.look(walls);
 
   const w = sceneW / scene.length;
   push();
   translate(sceneW, 0);
   for (let i = 0; i < scene.length; i++) {
     noStroke();
-    const barColor = map(scene[i], 0, sceneW, 255, 0);
-    const barHeight = map(scene[i], 0, sceneW, sceneH, 0);
+    const sq = scene[i] * scene[i];
+    const widthSquare = sceneW * sceneW;
+    const barColor = map(sq, 0, widthSquare, 255, 0);
+    let barHeight = map(scene[i], 0, sceneW, sceneH, 0);
     fill(barColor);
     rectMode(CENTER);
-    rect(i * w + w / 2, sceneH / 2, w, barHeight);
+    rect(i * w + w / 2, sceneH / 2, w + 1, (50 * barHeight) / scene[i]);
   }
   pop();
 
