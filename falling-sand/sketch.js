@@ -14,6 +14,7 @@ let grid;
 let w = 5;
 let cols, rows;
 let hueValue = 200;
+let showHint = true;
 
 function withinCols(i) {
   return i >= 0 && i <= cols - 1;
@@ -31,7 +32,19 @@ function setup() {
   grid = make2DArray(cols, rows);
 }
 
+function displayHint() {
+  textSize(20);
+  fill(100);
+  textAlign(CENTER, CENTER);
+  text(
+    'Click and drag the mouse to make sand fall',
+    width / 2,
+    height / 2 - 20
+  );
+}
+
 function mouseDragged() {
+  showHint = false;
   let mouseCol = floor(mouseX / w);
   let mouseRow = floor(mouseY / w);
 
@@ -56,6 +69,10 @@ function mouseDragged() {
 
 function draw() {
   background(51);
+
+  if (showHint) {
+    displayHint();
+  }
 
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {

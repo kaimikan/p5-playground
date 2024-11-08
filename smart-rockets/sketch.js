@@ -5,6 +5,7 @@ var lifeP;
 var count = 0;
 var target;
 var maxForce = 0.25;
+var maxFitness = 0;
 
 var recX = 250;
 var recY = 350;
@@ -22,7 +23,10 @@ function setup() {
 function draw() {
   background(0);
   population.run();
-  lifeP.html(count);
+  lifeP.html(
+    'Lifetime: ' + count + '/' + lifespan + ' Best Result: ' + round(maxFitness)
+  );
+  lifeP.html();
 
   count++;
   if (count == lifespan) {
@@ -87,7 +91,8 @@ function Population() {
         maxFit = this.rockets[i].fitness;
       }
     }
-    createP(maxFit);
+    // createP(maxFit);
+    maxFitness = maxFit;
 
     for (var i = 0; i < this.popSize; i++) {
       this.rockets[i].fitness /= maxFit;
