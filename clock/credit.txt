@@ -1,0 +1,5 @@
+Following "Coding Challenge #74: Clock with p5.js" on YouTube by The Coding Train
+
+📓 Golan Levin's notes on MAEDA’S 12 O’CLOCKS: https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa2NiYnBfQnJQaDd5RGYxY2QyZWlIa2JBb0VSUXxBQ3Jtc0ttYjk5UThuenZEY0xTUl9rR2dzZkg1U1JUUEFaQ2xKMGhrUkZSWnQ5NV8xLURlX21pNHo3WGozMmR1YVVzZWp3RmcwWlJoaDNaYzhXR21zS2Rwd0M2NWNuNXJ2ZU9yZzRkbGk0UUxXN3NHSFJLbUF3cw&q=http%3A%2F%2Fcmuems.com%2F2016%2F60212%2Flectures%2Flecture-09-09b-clocks%2Fmaedas-clocks%2F&v=E4RyStef-gY
+🕐 Alca's Clock Collection: https://codepen.io/collection/DqRNLQ/
+📄 ICM-2017 Syllabus: https://github.com/ITPNYU/ICM-2017
