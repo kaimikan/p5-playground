@@ -1,0 +1,2 @@
+Coding the Collatz Conjecture - by The Coding Train on YouTube
+cshep99 - for additional fixes and suggestions
