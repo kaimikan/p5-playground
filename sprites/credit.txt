@@ -1,0 +1,5 @@
+Sprite sheets for 2D animation in p5js by morejpeg on YouTube
+https://www.youtube.com/watch?v=eE65ody9MdI
+
+Sprite from here:
+https://craftpix.net/product/the-scientists-pixel-art-character-sprite-sheet-pack/
