@@ -14,7 +14,7 @@ But in order to run projects require images, sounds, and/or video you need to ho
 python -m http.server
 ```
 
-- open [http://localhost:8080/index.html](http://localhost:8080/index.html)
+- open [http://localhost:8000/index.html](http://localhost:8000/index.html)
 
 **Option 2 (requires Node.js):**
 
