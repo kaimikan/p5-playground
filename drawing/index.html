@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawing</title>
+    <link rel="stylesheet" href="../sketch-style.css" />
+    <script src="../p5/p5.min.js"></script>
+    <!-- <script src="../addons/p5.sound.js"></script> -->
+    <script src="sketch.js"></script>
+  </head>
+
+  <body>
+    <h3 id="back-to-main-page">
+      <a href="../index.html">◄ Back to Navigation</a>
+    </h3>
+
+    <main>
+      <div style="color: lightgray">
+        <div id="prompt"></div>
+        <button id="newPrompt">Generate Prompt</button>
+        <button id="resetCanvas">Reset Canvas</button>
+        <button id="exportDrawing">Export Drawing</button>
+
+        <div id="canvasContainer"></div>
+
+        <div>
+          <button id="erase">Eraser Mode OFF</button>
+          <label for="brushSize">Brush Size:</label>
+          <input type="range" id="brushSize" min="1" max="50" value="10" />
+          <label for="brushColor">Custom Color:</label>
+          <input type="color" id="brushColor" value="#000000" />
+          <button id="addColor">Save Color</button>
+          <button id="removeColor">Remove Color</button>
+          <div id="customPalette"></div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
