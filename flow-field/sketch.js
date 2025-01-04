@@ -16,6 +16,11 @@ function setup() {
     particles[i] = new Particle();
   }
   background(0);
+
+  downloadButton = createButton('Download Canvas');
+  downloadButton.style('background-color', '#212121');
+  downloadButton.style('color', '#bdbdbd');
+  downloadButton.mousePressed(() => saveCanvas('flow-field-gradient', 'png'));
 }
 
 function draw() {
