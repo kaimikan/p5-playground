@@ -1,5 +1,15 @@
 let words = []; // Store word objects
 let curseWords = ['damn', 'hell', 'crap', 'shit', 'fuck']; // Add your curse words here
+let sounds = {}; // Object to store sounds for each word
+
+function preload() {
+  // Load sounds for each curse word
+  sounds['damn'] = loadSound('damn.mp3');
+  sounds['hell'] = loadSound('hell.mp3');
+  sounds['crap'] = loadSound('crap.mp3');
+  sounds['shit'] = loadSound('shit.mp3');
+  sounds['fuck'] = loadSound('fuck.mp3');
+}
 
 function setup() {
   createCanvas(800, 500);
@@ -42,9 +52,12 @@ function draw() {
 }
 
 function mousePressed() {
+  // Pick a random word
+  let wordText = random(curseWords);
+
   // Add a new word at the mouse position
   let newWord = {
-    text: random(curseWords), // Pick a random word
+    text: wordText, // The selected word
     x: mouseX,
     y: mouseY,
     size: random(24, 48), // Random initial size
@@ -56,4 +69,9 @@ function mousePressed() {
     color: [random(255), random(255), random(255)], // Random color
   };
   words.push(newWord);
+
+  // Play the sound corresponding to the word
+  if (sounds[wordText]) {
+    sounds[wordText].play();
+  }
 }
