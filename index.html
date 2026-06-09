@@ -3,201 +3,833 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>P5 Links</title>
-    <link rel="stylesheet" type="text/css" href="list-style.css" />
+    <title>p5 Playground — Sketch Catalog</title>
+    <style>
+      :root {
+        --parchment: #efe2c0;
+        --ink: #43331c;
+        --ink-soft: #5f4a2c;
+        --rule: rgba(67, 51, 28, 0.35);
+        --card: rgba(255, 250, 235, 0.45);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 2.5rem 1.5rem 4rem;
+        background-color: var(--parchment);
+        background-image: radial-gradient(
+          ellipse at center,
+          rgba(255, 250, 235, 0.35) 0%,
+          rgba(67, 51, 28, 0.08) 100%
+        );
+        color: var(--ink);
+        font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+        line-height: 1.5;
+      }
+
+      header {
+        max-width: 64rem;
+        margin: 0 auto 2.5rem;
+        text-align: center;
+      }
+
+      h1 {
+        font-variant: small-caps;
+        letter-spacing: 0.12em;
+        font-weight: normal;
+        font-size: 2.4rem;
+        margin: 0 0 0.4rem;
+        border-bottom: 3px double var(--rule);
+        display: inline-block;
+        padding: 0 1.5rem 0.5rem;
+      }
+
+      header p {
+        color: var(--ink-soft);
+        font-style: italic;
+        margin: 0.6rem 0 0;
+      }
+
+      #gallery {
+        max-width: 64rem;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+        gap: 1.1rem;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 1rem 1.1rem 0.9rem;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 1px 2px 4px rgba(67, 51, 28, 0.12);
+      }
+
+      .card h2 {
+        font-variant: small-caps;
+        letter-spacing: 0.06em;
+        font-weight: normal;
+        font-size: 1.2rem;
+        margin: 0 0 0.45rem;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 0.3rem;
+      }
+
+      .card p {
+        margin: 0 0 0.8rem;
+        font-size: 0.92rem;
+        color: var(--ink-soft);
+        flex-grow: 1;
+      }
+
+      .card .tag {
+        font-size: 0.72rem;
+        font-style: italic;
+        color: var(--ink-soft);
+        opacity: 0.85;
+        margin-right: 0.5rem;
+      }
+
+      .card a.open {
+        align-self: flex-start;
+        color: var(--ink);
+        font-variant: small-caps;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        border: 1px solid var(--rule);
+        border-radius: 3px;
+        padding: 0.15rem 0.8rem;
+        transition: background-color 0.15s ease;
+      }
+
+      .card a.open:hover {
+        background-color: rgba(67, 51, 28, 0.12);
+      }
+
+      .card-footer {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      footer {
+        max-width: 64rem;
+        margin: 3rem auto 0;
+        text-align: center;
+        font-style: italic;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+        border-top: 1px solid var(--rule);
+        padding-top: 1rem;
+      }
+    </style>
   </head>
   <body>
-    <div id="list-container">
-      <h2>P5 Projects Links:</h2>
-      <div id="scrollable-content">
-        <p>Projects with * after their name require a local server</p>
-        <ul id="sortable-list">
-          <li>
-            <a href="2d-raycasting/index.html">2D Raycasting</a>
-          </li>
-          <li>
-            <a href="2d-supershapes/index.html">2D Supershapes</a>
-          </li>
-          <li>
-            <a href="10PRINT/index.html">10PRINT</a>
-          </li>
-          <li>
-            <a href="falling-sand/index.html">Falling Sand</a>
-          </li>
-          <li>
-            <a href="flocking-simulation/index.html">Flocking Simulation</a>
-          </li>
-          <li>
-            <a href="fractal-trees-recursive/index.html"
-              >Fractal Trees Recursion</a
-            >
-          </li>
-          <li>
-            <a href="phyllotaxis/index.html">Phyllotaxis</a>
-          </li>
-          <li>
-            <a href="quicksort-visualization/index.html"
-              >Quicksort Visualization</a
-            >
-          </li>
-          <li>
-            <a href="random-walker-2/index.html">Random Walker</a>
-          </li>
-          <li>
-            <a href="smart-rockets/index.html">Smart Rockets</a>
-          </li>
-          <li>
-            <a href="rendering-raycasting/index.html">Rendering Raycasting</a>
-          </li>
-          <li>
-            <a href="kaleidoscope/index.html">Kaleidoscope</a>
-          </li>
-          <li>
-            <a href="unfolding-fractals/index.html"
-              >Unfolding Fractals (don't run for too long)</a
-            >
-          </li>
-          <li>
-            <a href="platformer/index.html">Platformer</a>
-          </li>
-          <li>
-            <a href="2d-snake/index.html">2D Snake</a>
-          </li>
-          <li>
-            <a href="perlin-noise-lines/index.html">Perlin Noise Lines</a>
-          </li>
-          <li>
-            <a href="blurry-lines/index.html">Blurry Lines</a>
-          </li>
-          <li>
-            <a href="raining-rainbow/index.html">Raining Rainbow</a>
-          </li>
-          <li>
-            <a href="flow-field/index.html">Flow Field Gradient</a>
-          </li>
-          <li>
-            <a href="flow-field-rgb/index.html">Flow Field RGB</a>
-          </li>
-          <li>
-            <a href="flow-field-color-intervals/index.html"
-              >Flow Field Color Intervals</a
-            >
-          </li>
-          <li>
-            <a href="fireworks/index.html">Fireworks</a>
-          </li>
-          <li>
-            <a href="clock/index.html">Clock</a>
-          </li>
-          <li>
-            <a href="minesweeper/index.html">Minesweeper</a>
-          </li>
-          <li>
-            <a href="double-pendulum/index.html">Double Pendulum</a>
-          </li>
-          <li>
-            <a href="pong/index.html">Pong</a>
-          </li>
-          <li>
-            <a href="brick-pong/index.html">Pong Bricks</a>
-          </li>
-          <li>
-            <a href="infinite-stairs/index.html">Infinite Stairs</a>
-          </li>
-          <li>
-            <a href="starfield/index.html">Starfield</a>
-          </li>
-          <li>
-            <a href="rotating-bricks/index.html">Rotating Bricks</a>
-          </li>
-          <li>
-            <a href="collatz-conjecture/index.html">Collatz Conjecture</a>
-          </li>
-          <li>
-            <a href="mobius-strip/index.html">Mobius Strip</a>
-          </li>
-          <li>
-            <a href="mobius-strip-v2/index.html">Mobius Strip V2</a>
-          </li>
-          <li>
-            <a href="sprites/index.html">Sprites*</a>
-          </li>
-          <li>
-            <a href="holy-moly/index.html">Holy Moly*</a>
-          </li>
-          <li>
-            <a href="howard/index.html">Howard*</a>
-          </li>
-          <li>
-            <a href="fourier-series/index.html">Fourier Series</a>
-          </li>
-          <li>
-            <a href="maurer-rose/index.html">Maurer Rose</a>
-          </li>
-          <li>
-            <a href="langtons-ant/index.html">Langton's Ant</a>
-          </li>
-          <li>
-            <a href="barnsley-fern/index.html">Barnsley Fern</a>
-          </li>
-          <li>
-            <a href="piano/index.html">Piano Simplified*</a>
-          </li>
-          <li>
-            <a href="game-of-life/index.html">Game Of Life</a>
-          </li>
-          <li>
-            <a href="wordle/index.html">Wordle</a>
-          </li>
-          <li>
-            <a href="color-palettes/index.html">Color Palettes</a>
-          </li>
-          <li>
-            <a href="drawing/index.html">Drawing</a>
-          </li>
-          <li>
-            <a href="audio-recording/index.html">Audio Recording*</a>
-          </li>
-          <li>
-            <a href="gabriels-horn/index.html">Gabriel's Horn</a>
-          </li>
-          <li>
-            <a href="loading-screen/index.html">Loading Screen</a>
-          </li>
-          <li>
-            <a href="magic-8-ball/index.html">Magic 8 Ball</a>
-          </li>
-          <li>
-            <a href="lorenz-attractor/index.html">Lorenz Attractor</a>
-          </li>
-          <li>
-            <a href="lorenz-attractor-3d/index.html">Lorenz Attractor 3D</a>
-          </li>
-          <li>
-            <a href="tv-static/index.html">TV Static Visual Noise</a>
-          </li>
-          <li>
-            <a href="maze-generator/index.html">Maze Generator</a>
-          </li>
-          <li>
-            <a href="flower-equation/index.html">Flower Equation</a>
-          </li>
-          <li>
-            <a href="curse-words/index.html">Curse Words*</a>
-          </li>
-          <li>
-            <a href="snowflakes/index.html">Snowflakes</a>
-          </li>
-          <li>
-            <a href="soft-body/index.html">Soft Body</a>
-          </li>
-          <li>
-            <a href="solar-system/index.html">Solar System</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <header>
+      <h1>p5 Playground</h1>
+      <p>
+        A catalog of small p5.js sketches — generative art, simulations, games,
+        and experiments. Click a card to run the sketch.
+      </p>
+    </header>
 
-    <script src="script.js"></script>
+    <main id="gallery">
+      <div class="card">
+        <h2>10PRINT</h2>
+        <p>
+          The classic Commodore 64 one-liner: a maze-like pattern woven from
+          random diagonal slashes (Coding Train #76).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="10PRINT/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2D Raycasting</h2>
+        <p>
+          Rays cast from a mouse-driven light source strike randomly placed
+          walls, illuminating the scene (Coding Train #145).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="2d-raycasting/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2D Snake</h2>
+        <p>
+          Classic snake game with speed that increases as you eat, plus score
+          and high-score tracking. Arrow keys to steer.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="2d-snake/index.html">Open</a>
+          <span class="tag">game</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2D Supershapes</h2>
+        <p>
+          Shapes generated from the superformula, morphing through exotic
+          curve families (Coding Train #23).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="2d-supershapes/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Audio Recording</h2>
+        <p>
+          Record clips from your microphone, then play back and manage the
+          recordings with p5.sound.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="audio-recording/index.html">Open</a>
+          <span class="tag">needs microphone</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Audio Recordings</h2>
+        <p>
+          A near-identical copy of Audio Recording — the same mic recorder and
+          playback interface.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="audio-recordings/index.html">Open</a>
+          <span class="tag">needs microphone</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Barnsley Fern</h2>
+        <p>
+          A fern grown dot by dot from an iterated function system — four
+          affine maps chosen at random (Coding Train #108).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="barnsley-fern/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Blank Project</h2>
+        <p>
+          The starter template: an empty gray canvas, used as the base for new
+          sketches.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="blank_project/index.html">Open</a>
+          <span class="tag">template</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Blurry Lines</h2>
+        <p>
+          Drifting particles connected by soft, blurred lines that weave a
+          shifting web.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="blurry-lines/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Brick Pong</h2>
+        <p>
+          Breakout-style game: bounce the ball off your paddle to clear the
+          brick wall, with lives and score.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="brick-pong/index.html">Open</a>
+          <span class="tag">game</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Clock</h2>
+        <p>
+          A drawn clock face that tracks the real time (Coding Train #74).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="clock/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Collatz Conjecture</h2>
+        <p>
+          Collatz sequences rendered as organic branching strands, one per
+          starting number.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="collatz-conjecture/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Color Palettes</h2>
+        <p>
+          Random color palette generator with lockable swatches, hex codes, and
+          an adjustable palette size.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="color-palettes/index.html">Open</a>
+          <span class="tag">tool</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Curse Words</h2>
+        <p>
+          Click the canvas to spawn floating curse words, each voiced by its
+          own audio clip. Not safe for polite company.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="curse-words/index.html">Open</a>
+          <span class="tag">sound</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Double Pendulum</h2>
+        <p>
+          A chaotic double pendulum tracing its unpredictable path across the
+          canvas (Coding Train #93).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="double-pendulum/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Drawing</h2>
+        <p>
+          Freehand drawing pad with eraser and custom palette, plus random
+          adjective–noun–verb prompts to inspire each piece.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="drawing/index.html">Open</a>
+          <span class="tag">tool</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Falling Sand</h2>
+        <p>
+          A falling-sand cellular automaton — pour colored sand with the mouse
+          and watch it pile up (Coding Train #180).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="falling-sand/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Fireworks</h2>
+        <p>
+          Particle-system fireworks launching and bursting in HSB color
+          against a night sky.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="fireworks/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Flocking Simulation</h2>
+        <p>
+          Boids flocking via alignment, cohesion, and separation rules
+          (Coding Train #124).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="flocking-simulation/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Flow Field Gradient</h2>
+        <p>
+          A thousand particles swept along a Perlin-noise flow field, leaving
+          HSB gradient trails.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="flow-field/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Flow Field Color Intervals</h2>
+        <p>
+          Flow-field particles that change color on an adjustable interval,
+          with sliders, grayscale toggle, and canvas download.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="flow-field-color-intervals/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Flow Field RGB</h2>
+        <p>
+          Flow-field variant with selectable particle colors and a button to
+          download the canvas.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="flow-field-rgb/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Flower Equation</h2>
+        <p>
+          Polar flower plotter with an editable equation (sin(k·θ) by default)
+          and sliders to reshape the petals.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="flower-equation/index.html">Open</a>
+          <span class="tag">tool</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Fourier Series</h2>
+        <p>
+          Rotating epicycles summing into a square wave, drawn live
+          (Coding Train #125).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="fourier-series/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Fractal Trees (Recursive)</h2>
+        <p>
+          A recursive fractal tree whose branching angle you control
+          (Coding Train #14).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="fractal-trees-recursive/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Gabriel's Horn</h2>
+        <p>
+          The infinite-surface, finite-volume horn rendered in 3D with
+          drag-to-rotate and a yellow-to-red gradient.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="gabriels-horn/index.html">Open</a>
+          <span class="tag">3D</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Game of Life</h2>
+        <p>
+          Conway's Game of Life cellular automaton evolving from a random seed
+          (Coding Train #85).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="game-of-life/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Holy Moly</h2>
+        <p>
+          A big mysterious button that plays a sound and fills the screen with
+          random visual quirks.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="holy-moly/index.html">Open</a>
+          <span class="tag">sound</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Howard</h2>
+        <p>
+          Green-screen video experiment: a chroma-keyed video of Howard plays
+          over the canvas with a backing tune.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="howard/index.html">Open</a>
+          <span class="tag">video + sound</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Infinite Stairs</h2>
+        <p>
+          An endlessly scrolling staircase illusion, steps cycling forever
+          upward.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="infinite-stairs/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Kaleidoscope</h2>
+        <p>
+          Draw with mirrored symmetry — adjustable number of sides, color
+          picker, and save button.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="kaleidoscope/index.html">Open</a>
+          <span class="tag">tool</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Langton's Ant</h2>
+        <p>
+          The two-rule turmite that wanders chaotically before building its
+          famous highway (Coding Train #89).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="langtons-ant/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Loading Screen</h2>
+        <p>
+          A minimal fake loading screen: title, progress bar, and a simulated
+          four-second wait.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="loading-screen/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Lorenz Attractor</h2>
+        <p>
+          The Lorenz system's butterfly traced in 2D with slowly cycling hues.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="lorenz-attractor/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Lorenz Attractor 3D</h2>
+        <p>
+          The Lorenz attractor in full 3D with an orbit camera — drag to
+          rotate, scroll to zoom.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="lorenz-attractor-3d/index.html">Open</a>
+          <span class="tag">3D</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Magic 8 Ball</h2>
+        <p>
+          Ask a question and shake the Magic 8 Ball for one of the twenty
+          classic answers.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="magic-8-ball/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Maurer Rose</h2>
+        <p>
+          Maurer rose curves — petal patterns drawn by connecting points
+          stepped around a rose curve.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="maurer-rose/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Maze Generator</h2>
+        <p>
+          Recursive-backtracker maze you can actually play: walk from start to
+          finish, with hints, reset, and download.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="maze-generator/index.html">Open</a>
+          <span class="tag">game</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Minesweeper</h2>
+        <p>
+          Classic Minesweeper on a 10×10 grid — left-click to reveal,
+          right-click to flag.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="minesweeper/index.html">Open</a>
+          <span class="tag">game</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Möbius Strip</h2>
+        <p>
+          A Möbius strip rendered in 3D, after Patt Vira's p5.js tutorial.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="mobius-strip/index.html">Open</a>
+          <span class="tag">3D</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Möbius Strip V2</h2>
+        <p>
+          An animated Möbius strip variant, ported from Marta's Processing
+          sketch.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="mobius-strip-v2/index.html">Open</a>
+          <span class="tag">3D</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Perlin Noise Lines</h2>
+        <p>
+          Stacked horizontal lines undulating smoothly under Perlin noise.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="perlin-noise-lines/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Phyllotaxis</h2>
+        <p>
+          The golden-angle spiral of sunflower seeds, plotted dot by dot
+          (Coding Train #30).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="phyllotaxis/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Piano</h2>
+        <p>
+          A playable on-screen piano using sampled mp3 notes across three
+          octaves.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="piano/index.html">Open</a>
+          <span class="tag">sound</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Platformer</h2>
+        <p>
+          A multi-level platformer with enemies, hazards, gravity, and a
+          finish star to reach.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="platformer/index.html">Open</a>
+          <span class="tag">game</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Pong</h2>
+        <p>Two-player Pong with paddles, scoring, and a win state.</p>
+        <div class="card-footer">
+          <a class="open" href="pong/index.html">Open</a>
+          <span class="tag">game</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Quicksort Visualization</h2>
+        <p>
+          Animated quicksort (Lomuto partition scheme) sorting a field of bars
+          (Coding Train #143).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="quicksort-visualization/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Raining Rainbow</h2>
+        <p>
+          Pixelated rain droplets falling over a shifting rainbow background.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="raining-rainbow/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Random Walker</h2>
+        <p>
+          A single random walker leaving a trail of white dots
+          (Coding Train #52).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="random-walker/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Random Walker 2</h2>
+        <p>
+          Fifty grid-snapped walkers wandering at once, their trails fading
+          into the dark.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="random-walker-2/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Rendering Raycasting</h2>
+        <p>
+          A pseudo-3D first-person view rendered from the 2D raycasting scene,
+          Wolfenstein-style (Coding Train #146).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="rendering-raycasting/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Rotating Bricks</h2>
+        <p>
+          A row of 3D bricks — click and drag to rotate the view, scroll to
+          zoom.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="rotating-bricks/index.html">Open</a>
+          <span class="tag">3D</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Smart Rockets</h2>
+        <p>
+          A genetic algorithm evolves rockets that learn to steer around an
+          obstacle to a target (Coding Train #29).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="smart-rockets/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Snowflakes</h2>
+        <p>Snowflakes drifting down over a night-blue gradient sky.</p>
+        <div class="card-footer">
+          <a class="open" href="snowflakes/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Soft Body</h2>
+        <p>
+          A springy soft-body blob that squashes and follows the mouse using
+          spring physics.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="soft-body/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Solar System</h2>
+        <p>
+          A 3D solar system: eight planets orbiting a sun amid background
+          stars, with an orbit camera.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="solar-system/index.html">Open</a>
+          <span class="tag">3D</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Sprites</h2>
+        <p>
+          Sprite-sheet animation: an Among Us character walk cycle drawn frame
+          by frame from a sprite sheet.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="sprites/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Starfield</h2>
+        <p>
+          The classic warp-speed starfield — stars streaking past the camera
+          (Coding Train #1).
+        </p>
+        <div class="card-footer">
+          <a class="open" href="starfield/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>TV Static</h2>
+        <p>
+          Old-television static: per-pixel random noise at a retro 30 fps,
+          with canvas download.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="tv-static/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Unfolding Fractals</h2>
+        <p>
+          Segments that recursively unfold into fractal patterns
+          (Coding Train #185). Best not left running too long.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="unfolding-fractals/index.html">Open</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Wordle</h2>
+        <p>
+          A Wordle clone with six guesses, color feedback, and an on-screen
+          keyboard that tracks letter states.
+        </p>
+        <div class="card-footer">
+          <a class="open" href="wordle/index.html">Open</a>
+          <span class="tag">game</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Sketches that use media (sound, video, images, microphone) need to be
+      served over HTTP — any static server from the repo root will do.
+    </footer>
   </body>
 </html>
