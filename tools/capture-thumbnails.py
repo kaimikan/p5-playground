@@ -77,12 +77,22 @@ def find_chrome():
 
 CHROME = find_chrome()
 
+# Sketches that can't be captured here. Howard is an H.264 video and headless
+# Chromium has no H.264 codec, so it decodes to black — its poster is built by
+# tools/howard-thumbnail.py instead.
+SKIP = {"howard"}
+
 dirs = sys.argv[1:]
 if not dirs:
     dirs = sorted(
         d for d in os.listdir(ROOT)
-        if os.path.isfile(os.path.join(ROOT, d, "index.html"))
+        if os.path.isfile(os.path.join(ROOT, d, "index.html")) and d not in SKIP
     )
+else:
+    skipped = [d for d in dirs if d in SKIP]
+    for d in skipped:
+        print(f"  skip {d} (use tools/howard-thumbnail.py)")
+    dirs = [d for d in dirs if d not in SKIP]
 os.makedirs(OUT, exist_ok=True)
 
 proc = subprocess.Popen([
@@ -212,9 +222,16 @@ for d in dirs:
     try:
         rec = RECIPES.get(d, {})
         cmd("Page.navigate", {"url": f"{BASE}/{d}/index.html"})
-        time.sleep(0.8)  # let setup() create + size the canvas
-        r = cmd("Runtime.evaluate", {"expression": PROBE, "returnByValue": True})
-        val = r.get("result", {}).get("value")
+        # Poll for the canvas rather than guessing a fixed delay — some sketches
+        # (e.g. ones that load addons or media in setup) take a moment.
+        val = None
+        for _ in range(20):  # up to ~6s
+            time.sleep(0.3)
+            r = cmd("Runtime.evaluate",
+                    {"expression": PROBE, "returnByValue": True})
+            val = r.get("result", {}).get("value")
+            if val:
+                break
         if not val:
             raise RuntimeError("no canvas")
         rect = json.loads(val)

@@ -47,6 +47,7 @@ adding or changing a sketch), serve the repo and run the capture tool:
 ```
 python -m http.server 8077        # in one terminal, from the repo root
 python tools/capture-thumbnails.py   # in another; omit args for all sketches
+python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg)
 ```
 
 - **10PRINT** — the classic C64 one-liner maze of random diagonal slashes
