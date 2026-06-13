@@ -45,6 +45,7 @@ RECIPES = {
     "image-evolution": {"seconds": 14, "keys": ["f"]},  # fast-forward to a clear image
     "self-driving-car": {"seconds": 16, "keys": ["f"]},  # fast-forward to trained cars
     "neural-net-boundary": {"seconds": 16, "keys": ["f"]},  # fast-forward to a trained boundary
+    "truth-nuke": {"seconds": 3.0, "keys": [" "]},  # detonate, capture blast + fact
     "flow-field": {"seconds": 10},                # slow to build trails
     "howard": {"seconds": 6},                     # let the video load + play
     # mouseDragged() drops only a 3x3 cluster per event, so pour a dense
@@ -209,9 +210,13 @@ def to_px(pt, rect):
 
 
 def keypress(k):
-    up = k.upper()
-    p = {"key": k, "code": "Key" + up,
-         "windowsVirtualKeyCode": ord(up), "nativeVirtualKeyCode": ord(up)}
+    if k == " ":
+        p = {"key": " ", "code": "Space", "windowsVirtualKeyCode": 32,
+             "nativeVirtualKeyCode": 32}
+    else:
+        up = k.upper()
+        p = {"key": k, "code": "Key" + up,
+             "windowsVirtualKeyCode": ord(up), "nativeVirtualKeyCode": ord(up)}
     cmd("Input.dispatchKeyEvent", dict(p, type="keyDown"))
     cmd("Input.dispatchKeyEvent", dict(p, type="keyUp"))
 

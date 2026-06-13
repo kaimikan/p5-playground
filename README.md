@@ -116,6 +116,7 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Solar System** — 3D solar system with orbiting planets and a starfield
 - **Sprites** — sprite-sheet walk-cycle animation
 - **Starfield** — warp-speed starfield simulator
+- **Truth Nuke** — drop twin p5 mushroom clouds with a synthesized boom, then a hard-to-swallow "truth nuke" fact slams on screen
 - **TV Static** — old-TV per-pixel noise at a retro 30 fps
 - **Unfolding Fractals** — recursively unfolding fractal segments (don't run too long)
 - **Wordle** — Wordle clone with on-screen keyboard and color feedback
