@@ -30,9 +30,32 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "thumbnails")
 BASE = os.environ.get("BASE_URL", "http://localhost:8077")
 PORT = 9333
-RUN_SECONDS = 2.6           # let each sketch animate before the shot
+RUN_SECONDS = 2.6           # default animate time before the shot
 W, H = 1000, 960            # generous window; we clip to the canvas itself
 TARGET_W = 360              # poster width in px
+
+# Per-sketch recipes for sketches that are blank/unrepresentative by default.
+# Coords are normalised (0..1) within the canvas.
+#   seconds : run time before capture (overrides RUN_SECONDS)
+#   drag    : press, move through points with the button held, release
+#   move    : move the mouse (no button) through points (e.g. mouse-followers)
+RECIPES = {
+    "flow-field": {"seconds": 10},                # slow to build trails
+    "howard": {"seconds": 6},                     # let the video load + play
+    # mouseDragged() drops only a 3x3 cluster per event, so pour a dense
+    # zig-zag over one spot to build a visible mound of sand.
+    "falling-sand": {"seconds": 4.5, "drag":
+        [(0.5 + 0.06 * (1 if k % 2 else -1), 0.12 + 0.0015 * k)
+         for k in range(90)]},
+    "kaleidoscope": {"seconds": 2.5, "drag": [
+        (0.4, 0.3), (0.62, 0.42), (0.45, 0.6), (0.6, 0.66), (0.5, 0.45),
+        (0.35, 0.55)]},
+    "drawing": {"seconds": 2.5, "drag": [
+        (0.3, 0.4), (0.5, 0.28), (0.7, 0.5), (0.52, 0.62), (0.34, 0.5),
+        (0.5, 0.45)]},
+    "soft-body": {"seconds": 2.5, "move": [
+        (0.5, 0.5), (0.68, 0.42), (0.38, 0.58), (0.58, 0.48), (0.5, 0.55)]},
+}
 
 
 def find_chrome():
@@ -157,16 +180,46 @@ PROBE = (
     "return JSON.stringify({x:r.x,y:r.y,w:r.width,h:r.height});})()"
 )
 
+def mouse(kind, x, y, held=False):
+    cmd("Input.dispatchMouseEvent", {
+        "type": kind, "x": x, "y": y,
+        "button": "left" if held else "none",
+        "buttons": 1 if held else 0,
+        "clickCount": 1 if kind == "mousePressed" else 0,
+    })
+
+
+def to_px(pt, rect):
+    return rect["x"] + pt[0] * rect["w"], rect["y"] + pt[1] * rect["h"]
+
+
+def run_recipe(rec, rect):
+    if "drag" in rec:
+        pts = [to_px(p, rect) for p in rec["drag"]]
+        mouse("mousePressed", *pts[0], held=True)
+        for p in pts[1:]:
+            mouse("mouseMoved", *p, held=True)
+            time.sleep(0.12)
+        mouse("mouseReleased", *pts[-1], held=True)
+    if "move" in rec:
+        for p in rec["move"]:
+            mouse("mouseMoved", *to_px(p, rect))
+            time.sleep(0.25)
+
+
 ok, fail = [], []
 for d in dirs:
     try:
+        rec = RECIPES.get(d, {})
         cmd("Page.navigate", {"url": f"{BASE}/{d}/index.html"})
-        time.sleep(RUN_SECONDS)
+        time.sleep(0.8)  # let setup() create + size the canvas
         r = cmd("Runtime.evaluate", {"expression": PROBE, "returnByValue": True})
         val = r.get("result", {}).get("value")
         if not val:
             raise RuntimeError("no canvas")
         rect = json.loads(val)
+        run_recipe(rec, rect)
+        time.sleep(rec.get("seconds", RUN_SECONDS))
         scale = min(1.0, TARGET_W / rect["w"])
         res = cmd("Page.captureScreenshot", {
             "format": "jpeg", "quality": 82, "captureBeyondViewport": True,

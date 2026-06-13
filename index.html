@@ -755,8 +755,59 @@
         render();
       });
 
+      // -----------------------------------------------------------------
+      // Preserve scroll + filter across visits. Opening a sketch is a full
+      // navigation away (each sketch is its own page), so on the way back we
+      // restore the category, the search text, and the exact scroll position
+      // instead of resetting to the top.
+      // -----------------------------------------------------------------
+      const STATE_KEY = 'p5gallery.state';
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+
+      function saveState() {
+        try {
+          sessionStorage.setItem(
+            STATE_KEY,
+            JSON.stringify({ cat: activeCat, q: query, y: window.scrollY })
+          );
+        } catch (e) {}
+      }
+      // pagehide fires before we navigate to a sketch (and before tab close).
+      window.addEventListener('pagehide', saveState);
+
+      function loadState() {
+        try {
+          return JSON.parse(sessionStorage.getItem(STATE_KEY)) || null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      const saved = loadState();
+      if (saved) {
+        activeCat = saved.cat || 'all';
+        query = saved.q || '';
+        searchEl.value = query;
+      }
+
       buildChips();
       render();
+
+      // Restore scroll after layout. Card heights are fixed (aspect-ratio),
+      // so the page height is stable before posters finish loading and the
+      // restored offset stays accurate.
+      if (saved && saved.y) {
+        window.scrollTo(0, saved.y);
+        requestAnimationFrame(() => window.scrollTo(0, saved.y));
+      }
+
+      // If the page comes back from the bfcache, the browser keeps its own
+      // scroll — don't fight it.
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) return;
+      });
     </script>
   </body>
 </html>
