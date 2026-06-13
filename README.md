@@ -34,7 +34,12 @@ http-server
 
 ## Sketch catalog
 
-The repo root's `index.html` is a browsable gallery of every sketch — open it (ideally via a local server, see above) and click a card to run a sketch.
+The repo root's `index.html` is a browsable gallery of every sketch, grouped
+into categories (Learning, Generative & Art, Simulation & Physics, 3D, Games,
+Algorithms & Math, Tools & Toys). **Hover any card to run the sketch live in
+place**; click it to open full-size. Filter chips and a search box are at the
+top. Serve it via a local server (see above) so the hover previews and any
+media-backed sketches work.
 
 - **10PRINT** — the classic C64 one-liner maze of random diagonal slashes
 - **2D Raycasting** — rays from a mouse-driven light source hitting random walls
@@ -52,6 +57,7 @@ The repo root's `index.html` is a browsable gallery of every sketch — open it 
 - **Curse Words** — click to spawn curse words, each voiced by an audio clip
 - **Double Pendulum** — chaotic double pendulum tracing its path
 - **Drawing** — freehand drawing pad with random adjective–noun–verb prompts
+- **Evolving Walkers** — a genetic algorithm whose walkers learn to weave an obstacle course; live fitness graph climbs generation by generation
 - **Falling Sand** — falling-sand cellular automaton; pour sand with the mouse
 - **Fireworks** — particle fireworks bursting in HSB color over a night sky
 - **Flocking Simulation** — boids with alignment, cohesion and separation
