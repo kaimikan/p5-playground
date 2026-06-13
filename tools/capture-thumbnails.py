@@ -41,6 +41,7 @@ TARGET_W = 360              # poster width in px
 #   move    : move the mouse (no button) through points (e.g. mouse-followers)
 RECIPES = {
     "flappy-evolution": {"seconds": 7},           # let a few generations pass
+    "q-learning": {"seconds": 12, "keys": ["f"]}, # fast-forward to a learned policy
     "flow-field": {"seconds": 10},                # slow to build trails
     "howard": {"seconds": 6},                     # let the video load + play
     # mouseDragged() drops only a 3x3 cluster per event, so pour a dense
@@ -204,6 +205,14 @@ def to_px(pt, rect):
     return rect["x"] + pt[0] * rect["w"], rect["y"] + pt[1] * rect["h"]
 
 
+def keypress(k):
+    up = k.upper()
+    p = {"key": k, "code": "Key" + up,
+         "windowsVirtualKeyCode": ord(up), "nativeVirtualKeyCode": ord(up)}
+    cmd("Input.dispatchKeyEvent", dict(p, type="keyDown"))
+    cmd("Input.dispatchKeyEvent", dict(p, type="keyUp"))
+
+
 def run_recipe(rec, rect):
     if "drag" in rec:
         pts = [to_px(p, rect) for p in rec["drag"]]
@@ -216,6 +225,9 @@ def run_recipe(rec, rect):
         for p in rec["move"]:
             mouse("mouseMoved", *to_px(p, rect))
             time.sleep(0.25)
+    if "keys" in rec:
+        for k in rec["keys"]:
+            keypress(k)
 
 
 ok, fail = [], []
