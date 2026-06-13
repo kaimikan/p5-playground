@@ -40,6 +40,7 @@ TARGET_W = 360              # poster width in px
 #   drag    : press, move through points with the button held, release
 #   move    : move the mouse (no button) through points (e.g. mouse-followers)
 RECIPES = {
+    "flappy-evolution": {"seconds": 7},           # let a few generations pass
     "flow-field": {"seconds": 10},                # slow to build trails
     "howard": {"seconds": 6},                     # let the video load + play
     # mouseDragged() drops only a 3x3 cluster per event, so pour a dense
