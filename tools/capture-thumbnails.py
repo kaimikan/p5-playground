@@ -43,6 +43,7 @@ RECIPES = {
     "flappy-evolution": {"seconds": 7},           # let a few generations pass
     "q-learning": {"seconds": 12, "keys": ["f"]}, # fast-forward to a learned policy
     "image-evolution": {"seconds": 14, "keys": ["f"]},  # fast-forward to a clear image
+    "self-driving-car": {"seconds": 16, "keys": ["f"]},  # fast-forward to trained cars
     "flow-field": {"seconds": 10},                # slow to build trails
     "howard": {"seconds": 6},                     # let the video load + play
     # mouseDragged() drops only a 3x3 cluster per event, so pour a dense
