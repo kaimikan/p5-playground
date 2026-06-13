@@ -71,6 +71,7 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Evolving Walkers** — a genetic algorithm whose walkers learn to weave an obstacle course; live fitness graph climbs generation by generation
 - **Falling Sand** — falling-sand cellular automaton; pour sand with the mouse
 - **Fireworks** — particle fireworks bursting in HSB color over a night sky
+- **Flappy Evolution** — birds with neural-net brains evolve to thread the pipes (neuroevolution); best-score chart climbs each generation
 - **Flocking Simulation** — boids with alignment, cohesion and separation
 - **Flow Field Gradient** — 1000 particles riding a Perlin-noise flow field with HSB trails
 - **Flow Field Color Intervals** — flow field with interval-based color changes and sliders
@@ -82,6 +83,7 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Game of Life** — Conway's Game of Life from a random seed
 - **Holy Moly** — a mysterious button that plays a sound and spawns visual quirks
 - **Howard** — green-screen (chroma key) video experiment with a backing tune
+- **Image Evolution** — the "evolve the Mona Lisa" demo; translucent triangles mutate into a target image by keeping only what helps
 - **Infinite Stairs** — endlessly scrolling staircase illusion
 - **Kaleidoscope** — mirrored-symmetry drawing with adjustable sides and save button
 - **Langton's Ant** — the two-rule turmite that eventually builds its highway
@@ -99,11 +101,13 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Piano** — playable on-screen piano with sampled mp3 notes
 - **Platformer** — multi-level platformer with enemies, hazards and a finish star
 - **Pong** — two-player Pong with scoring
+- **Q-Learning** — a reinforcement-learning agent learns a grid by reward; value heatmap and policy arrows emerge as success rate climbs
 - **Quicksort Visualization** — animated quicksort (Lomuto partition) on bars
 - **Raining Rainbow** — pixelated rain over a shifting rainbow background
 - **Random Walker** — a single random walker leaving a dotted trail
 - **Random Walker 2** — fifty grid-snapped walkers with fading trails
 - **Rendering Raycasting** — pseudo-3D first-person view from 2D raycasting
+- **Self-Driving Car** — cars with sensor rays and neural-net brains evolve to drive a track without crashing (neuroevolution)
 - **Rotating Bricks** — a row of 3D bricks; drag to rotate, scroll to zoom
 - **Smart Rockets** — genetic algorithm evolving rockets toward a target
 - **Snowflakes** — snow drifting over a night-blue gradient sky
