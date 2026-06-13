@@ -41,6 +41,14 @@ place**; click it to open full-size. Filter chips and a search box are at the
 top. Serve it via a local server (see above) so the hover previews and any
 media-backed sketches work.
 
+Each card's still poster lives in `thumbnails/`. To regenerate them (e.g. after
+adding or changing a sketch), serve the repo and run the capture tool:
+
+```
+python -m http.server 8077        # in one terminal, from the repo root
+python tools/capture-thumbnails.py   # in another; omit args for all sketches
+```
+
 - **10PRINT** — the classic C64 one-liner maze of random diagonal slashes
 - **2D Raycasting** — rays from a mouse-driven light source hitting random walls
 - **2D Snake** — classic snake game with increasing speed and high-score tracking
