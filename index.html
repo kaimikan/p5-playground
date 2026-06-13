@@ -873,8 +873,9 @@
           const h = document.createElement('h2');
           h.className = 'section-title mono';
           h.innerHTML =
-            (cat.lead ? '<span class="lead">🌱</span> ' : '') +
-            cat.name +
+            (cat.lead
+              ? '<span class="lead">' + cat.name + '</span>'
+              : cat.name) +
             ' <span class="n" style="opacity:.5">' +
             items.length +
             '</span>';
