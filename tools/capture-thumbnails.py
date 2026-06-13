@@ -45,7 +45,7 @@ RECIPES = {
     "image-evolution": {"seconds": 14, "keys": ["f"]},  # fast-forward to a clear image
     "self-driving-car": {"seconds": 16, "keys": ["f"]},  # fast-forward to trained cars
     "neural-net-boundary": {"seconds": 16, "keys": ["f"]},  # fast-forward to a trained boundary
-    "truth-nuke": {"seconds": 3.0, "keys": [" "]},  # detonate, capture blast + fact
+    "truth-nuke": {"seconds": 5.0, "keys": [" "]},  # detonate, capture blast + fact
     "flow-field": {"seconds": 10},                # slow to build trails
     "howard": {"seconds": 6},                     # let the video load + play
     # mouseDragged() drops only a 3x3 cluster per event, so pour a dense

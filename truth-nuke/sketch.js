@@ -20,26 +20,50 @@ let factAge = -1;
 let armed = true; // prevent re-trigger mid-blast
 
 // synthesized sound
-let boomOsc, boomEnv, noise, noiseEnv, soundReady = false;
+let boomOsc, boomEnv, boomNoise, noiseEnv, soundReady = false;
 
 const FACTS = [
-  'You will never read every book you want to read.',
+  'The story you tell about yourself is self-reinforcing: believe you are unlucky or depressed and you make it real — and the reverse is just as true.',
+  'No one is coming to save you. That is not despair, it is permission.',
+  'You are roughly the average of the five people you spend the most time with.',
+  'The pain of discipline weighs ounces; the pain of regret weighs tons.',
+  "You don't lack time, you lack priorities — you found the time for this.",
+  "Most 'overthinking' is just avoiding a decision you have already made.",
+  'You become whatever you repeatedly tolerate and repeatedly practice.',
+  'Where your attention goes is the truest measure of what you actually value.',
+  'The skills you keep avoiding are the ones quietly running your life.',
+  'Motivation follows action, not the other way around.',
+  'Your standards, not your dreams, decide how your life actually goes.',
   'Nobody is thinking about you as much as you think they are.',
-  "The book you're 'going to read' is judging you.",
-  'Most of your problems are scheduling problems.',
-  'Your screen-time report is not a typo.',
+  'You will never read every book you want to read.',
   "You've already met most of the friends you'll ever have.",
-  'Comfort is the slowest way to fail.',
+  'Comfort is a slow, pleasant way to fail.',
   'Most arguments online change exactly zero minds.',
   'Discipline is just remembering what you actually want.',
   'Someone less qualified than you is doing the thing you keep putting off.',
-  'The gym membership does nothing if you never go.',
-  'Hard work beats talent — until talent starts working hard.',
-  'Your future self is watching you choose this right now.',
   'Being busy is not the same as being productive.',
   "'I'll do it tomorrow' has a perfect 0% completion rate.",
-  'You cannot out-google a lack of thinking.',
 ];
+
+// shuffle-bag: every fact is shown once before any repeats
+let factBag = [];
+let lastFactIdx = -1;
+function pickFact() {
+  if (factBag.length === 0) {
+    factBag = Array.from({ length: FACTS.length }, (_, i) => i);
+    for (let i = factBag.length - 1; i > 0; i--) {
+      const j = floor(random(i + 1));
+      [factBag[i], factBag[j]] = [factBag[j], factBag[i]];
+    }
+    // don't let a fresh bag immediately repeat the last fact shown
+    if (factBag[factBag.length - 1] === lastFactIdx && factBag.length > 1) {
+      [factBag[factBag.length - 1], factBag[0]] =
+        [factBag[0], factBag[factBag.length - 1]];
+    }
+  }
+  lastFactIdx = factBag.pop();
+  return FACTS[lastFactIdx];
+}
 
 function preload() {
   charImg = loadImage('character.png');
@@ -62,7 +86,7 @@ function setup() {
     boomEnv = new p5.Envelope();
     boomEnv.setADSR(0.005, 0.5, 0, 0.4);
     boomEnv.setRange(0.9, 0);
-    noise = new p5.Noise('brown');
+    boomNoise = new p5.Noise('brown');
     noiseEnv = new p5.Envelope();
     noiseEnv.setADSR(0.001, 0.35, 0, 0.3);
     noiseEnv.setRange(0.6, 0);
@@ -77,7 +101,7 @@ function detonate() {
   right.fire();
   shake = 16;
   flash = 200;
-  fact = random(FACTS);
+  fact = pickFact();
   factAge = -18; // delay the text until the blast peaks
   playBoom();
 }
@@ -88,14 +112,14 @@ function playBoom() {
     userStartAudio();
     boomOsc.start();
     boomOsc.amp(boomEnv);
-    noise.start();
-    noise.amp(noiseEnv);
+    boomNoise.start();
+    boomNoise.amp(noiseEnv);
     soundReady = true;
   }
   boomOsc.freq(110);
   boomOsc.freq(28, 0.5); // pitch drop = the "whump"
   boomEnv.play(boomOsc);
-  noiseEnv.play(noise);
+  noiseEnv.play(boomNoise);
 }
 
 function draw() {
@@ -157,6 +181,7 @@ function drawSky() {
 }
 
 function drawFact() {
+  if (!fact) return; // nothing until the first detonation
   if (factAge < 0) {
     factAge++;
     return;
@@ -165,6 +190,8 @@ function drawFact() {
   const prog = constrain(factAge / 10, 0, 1);
   const ease = 1 - pow(1 - prog, 3);
   const alpha = 255 * ease;
+  // longer pills get smaller type so they fit the band
+  const ts = fact.length > 95 ? 21 : fact.length > 60 ? 25 : 30;
 
   const boxH = H * 0.3;
   const boxY = H - boxH - 10;
@@ -180,7 +207,7 @@ function drawFact() {
   scale(lerp(1.25, 1, ease));
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
-  textSize(30);
+  textSize(ts);
   // shadow for readability
   fill(0, 0, 0, alpha);
   text(fact, -W / 2 + 38 + 2, -boxH / 2 + 2, W - 76, boxH);
@@ -201,14 +228,31 @@ function Blast(x, y, scl, seed) {
   this.age = -1;
   this.dur = 70;
   this.embers = [];
+  this.fires = [];
+
+  this.spawnFire = function (n, atY, spread, vyMin, vyMax) {
+    for (let i = 0; i < n; i++) {
+      this.fires.push({
+        x: this.x + random(-spread, spread),
+        y: atY + random(-6, 6),
+        vx: random(-1.6, 1.6) * this.scl,
+        vy: -random(vyMin, vyMax) * this.scl,
+        life: random(0.7, 1),
+        decay: random(0.012, 0.03),
+        size: random(7, 18) * this.scl,
+      });
+    }
+  };
 
   this.fire = function () {
     this.age = 0;
     this.embers = [];
-    const n = 26;
+    this.fires = [];
+    this.spawnFire(46, this.y, 26 * this.scl, 2, 8); // initial fireball burst
+    const n = 30;
     for (let i = 0; i < n; i++) {
       const a = random(-PI, 0); // upward hemisphere
-      const sp = random(3, 9) * this.scl;
+      const sp = random(3, 10) * this.scl;
       this.embers.push({
         x: this.x,
         y: this.y,
@@ -288,7 +332,36 @@ function Blast(x, y, scl, seed) {
       circle(this.x, capY, capR * 0.8);
     }
 
-    // embers
+    // fire particles (additive glow) emitted from the base and lower column
+    if (this.age < 34) {
+      this.spawnFire(5, this.y, 22 * this.scl, 2, 6);
+      this.spawnFire(3, lerp(this.y, capY, 0.3), 16 * this.scl, 1, 4);
+    }
+    push();
+    blendMode(ADD);
+    noStroke();
+    for (const f of this.fires) {
+      f.x +=
+        f.vx +
+        (noise(f.x * 0.012, f.y * 0.012, this.age * 0.06) - 0.5) * 2.4 * this.scl;
+      f.y += f.vy;
+      f.vy += 0.05 * this.scl; // gravity slows the rise
+      f.vy *= 0.99;
+      f.vx *= 0.98;
+      f.life -= f.decay;
+      if (f.life <= 0) continue;
+      const col = fireColor(f.life);
+      const a = 255 * f.life * fade;
+      fill(col[0], col[1], col[2], a * 0.45); // soft glow
+      circle(f.x, f.y, f.size * 1.9);
+      fill(min(col[0] + 40, 255), min(col[1] + 50, 255), col[2], a); // hot core
+      circle(f.x, f.y, f.size * 0.8);
+    }
+    blendMode(BLEND);
+    pop();
+    this.fires = this.fires.filter((f) => f.life > 0);
+
+    // embers / sparks
     for (const e of this.embers) {
       e.x += e.vx;
       e.y += e.vy;
@@ -301,6 +374,24 @@ function Blast(x, y, scl, seed) {
     }
     this.embers = this.embers.filter((e) => e.life > 0);
   };
+}
+
+// fire gradient by particle life: white-hot → yellow → orange → red → ember
+function fireColor(t) {
+  if (t > 0.7) {
+    const u = (t - 0.7) / 0.3;
+    return [255, lerp(195, 250, u), lerp(70, 210, u)];
+  }
+  if (t > 0.4) {
+    const u = (t - 0.4) / 0.3;
+    return [255, lerp(110, 195, u), lerp(25, 70, u)];
+  }
+  if (t > 0.15) {
+    const u = (t - 0.15) / 0.25;
+    return [lerp(200, 255, u), lerp(45, 110, u), 20];
+  }
+  const u = t / 0.15;
+  return [lerp(90, 200, u), lerp(20, 45, u), 12];
 }
 
 // ---------------------------------------------------------------------------
