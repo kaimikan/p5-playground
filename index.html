@@ -412,6 +412,134 @@
           width: 100%;
         }
       }
+
+      /* ---- overlay viewer ---- */
+      .viewer {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        background: rgba(8, 8, 10, 0.97);
+        backdrop-filter: blur(6px);
+        opacity: 0;
+        transition: opacity 0.18s ease;
+      }
+
+      .viewer[hidden] {
+        display: none;
+      }
+
+      .viewer.open {
+        opacity: 1;
+      }
+
+      .viewer-bar {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.7rem 1rem 0.7rem 1.1rem;
+        background: var(--panel);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .viewer-meta {
+        min-width: 0; /* allow truncation */
+        display: flex;
+        align-items: baseline;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+      }
+
+      .viewer-cat {
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #fff;
+        background: var(--accent);
+        border-radius: 999px;
+        padding: 0.15rem 0.6rem;
+        white-space: nowrap;
+      }
+
+      .viewer-title {
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .viewer-desc {
+        margin: 0;
+        font-size: 0.84rem;
+        color: var(--muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 46rem;
+      }
+
+      .viewer-actions {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .viewer-btn,
+      .viewer-close {
+        font-family: 'SF Mono', ui-monospace, monospace;
+        font-size: 0.78rem;
+        color: var(--muted);
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.3rem 0.85rem;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.12s, border-color 0.12s, background 0.12s;
+      }
+
+      .viewer-btn:hover,
+      .viewer-close:hover {
+        color: var(--text);
+        border-color: #3a3a42;
+      }
+
+      .viewer-close {
+        font-size: 0.95rem;
+        line-height: 1;
+        padding: 0.32rem 0.7rem;
+      }
+
+      .viewer-close:hover {
+        color: #fff;
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .viewer-stage {
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+        background: #1b1b1b; /* matches the sketch pages' own background */
+      }
+
+      .viewer-stage iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+      }
+
+      @media (max-width: 540px) {
+        .viewer-desc {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -699,6 +827,22 @@
           a.addEventListener('mouseleave', leave);
         }
 
+        // Open in the overlay viewer on a plain left-click; leave modified
+        // clicks (new tab, etc.) and the href intact as a no-JS fallback.
+        a.addEventListener('click', (e) => {
+          if (
+            e.button !== 0 ||
+            e.metaKey ||
+            e.ctrlKey ||
+            e.shiftKey ||
+            e.altKey
+          ) {
+            return;
+          }
+          e.preventDefault();
+          openSketch(s);
+        });
+
         const meta = document.createElement('div');
         meta.className = 'meta';
         meta.innerHTML =
@@ -808,6 +952,119 @@
       window.addEventListener('pageshow', (e) => {
         if (e.persisted) return;
       });
+
+      // -----------------------------------------------------------------
+      // Overlay viewer — open a sketch in a fullscreen frame ON TOP of the
+      // gallery instead of navigating away, so the grid and your scroll
+      // position stay put and closing is instant. The URL hash mirrors the
+      // open sketch, so links are shareable and the browser Back button (and
+      // Esc) close the overlay.
+      // -----------------------------------------------------------------
+      const viewer = document.createElement('div');
+      viewer.className = 'viewer';
+      viewer.hidden = true;
+      viewer.setAttribute('role', 'dialog');
+      viewer.setAttribute('aria-modal', 'true');
+      viewer.innerHTML =
+        '<div class="viewer-bar">' +
+        '<div class="viewer-meta">' +
+        '<span class="viewer-cat mono"></span>' +
+        '<h2 class="viewer-title"></h2>' +
+        '<p class="viewer-desc"></p>' +
+        '</div>' +
+        '<div class="viewer-actions">' +
+        '<a class="viewer-btn" target="_blank" rel="noopener">open standalone ↗</a>' +
+        '<button class="viewer-close" aria-label="Close (Esc)">✕</button>' +
+        '</div>' +
+        '</div>' +
+        '<div class="viewer-stage">' +
+        '<iframe title="sketch" allow="autoplay; microphone"></iframe>' +
+        '</div>';
+      document.body.appendChild(viewer);
+
+      const vCat = viewer.querySelector('.viewer-cat');
+      const vTitle = viewer.querySelector('.viewer-title');
+      const vDesc = viewer.querySelector('.viewer-desc');
+      const vOpen = viewer.querySelector('.viewer-btn');
+      const vClose = viewer.querySelector('.viewer-close');
+      const vFrame = viewer.querySelector('iframe');
+      const catName = (key) =>
+        (CATEGORIES.find((c) => c.key === key) || {}).name || '';
+
+      let currentDir = null;
+      let lastFocus = null;
+
+      function openOverlay(s) {
+        if (currentDir === s.dir) return; // already showing it
+        currentDir = s.dir;
+        lastFocus = document.activeElement;
+        vCat.textContent = catName(s.cat);
+        vTitle.textContent = s.title;
+        vDesc.textContent = s.desc;
+        vOpen.href = s.dir + '/index.html';
+        vFrame.title = s.title;
+        // Hide the sketch's own back-link inside the frame — the overlay has
+        // its own close button. Same-origin, so we can reach into it.
+        vFrame.onload = () => {
+          try {
+            const bl =
+              vFrame.contentDocument.getElementById('back-to-main-page');
+            if (bl) bl.style.display = 'none';
+          } catch (e) {}
+        };
+        vFrame.src = s.dir + '/index.html';
+        viewer.hidden = false;
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => viewer.classList.add('open'));
+        vClose.focus();
+      }
+
+      function closeOverlay() {
+        if (currentDir === null) return;
+        currentDir = null;
+        viewer.classList.remove('open');
+        vFrame.src = 'about:blank'; // stop the sketch's draw loop
+        document.body.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+        setTimeout(() => {
+          if (currentDir === null) viewer.hidden = true;
+        }, 180);
+      }
+
+      function dirFromHash() {
+        return decodeURIComponent((location.hash || '').replace(/^#/, ''));
+      }
+
+      function openSketch(s) {
+        history.pushState({ s: s.dir }, '', '#' + encodeURIComponent(s.dir));
+        openOverlay(s);
+      }
+
+      function syncFromHash() {
+        const s = SKETCHES.find((x) => x.dir === dirFromHash());
+        if (s) openOverlay(s);
+        else closeOverlay();
+      }
+
+      // Browser Back/Forward drives the overlay through the hash. Listen to
+      // both popstate and hashchange so any hash transition (history nav,
+      // edited URL) stays in sync; syncFromHash is idempotent.
+      window.addEventListener('popstate', syncFromHash);
+      window.addEventListener('hashchange', syncFromHash);
+      vClose.addEventListener('click', () => history.back());
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && currentDir !== null) history.back();
+      });
+
+      // Deep link: if we loaded with a sketch hash, insert a clean gallery
+      // entry first so Back returns here, then show the sketch.
+      (function initOverlay() {
+        const s = SKETCHES.find((x) => x.dir === dirFromHash());
+        if (s) {
+          history.replaceState(null, '', location.pathname + location.search);
+          openSketch(s);
+        }
+      })();
     </script>
   </body>
 </html>

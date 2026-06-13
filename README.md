@@ -37,8 +37,10 @@ http-server
 The repo root's `index.html` is a browsable gallery of every sketch, grouped
 into categories (Learning, Generative & Art, Simulation & Physics, 3D, Games,
 Algorithms & Math, Tools & Toys). **Hover any card to run the sketch live in
-place**; click it to open full-size. Filter chips and a search box are at the
-top. Serve it via a local server (see above) so the hover previews and any
+place**; click it to open the sketch fullscreen in an overlay on top of the
+gallery (Esc or Back closes it, your scroll position is kept, and the URL hash
+makes each sketch shareable/deep-linkable). Filter chips and a search box are at
+the top. Serve it via a local server (see above) so the previews and any
 media-backed sketches work.
 
 Each card's still poster lives in `thumbnails/`. To regenerate them (e.g. after
