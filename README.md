@@ -96,6 +96,7 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Minesweeper** — classic Minesweeper with left/right-click controls
 - **Möbius Strip** — a Möbius strip rendered in 3D
 - **Möbius Strip V2** — animated Möbius strip variant
+- **Neural Net Boundary** — a network trained by backpropagation (gradient descent) bends its decision boundary around two spirals
 - **Perlin Noise Lines** — stacked lines undulating with Perlin noise
 - **Phyllotaxis** — the golden-angle sunflower-seed spiral
 - **Piano** — playable on-screen piano with sampled mp3 notes
