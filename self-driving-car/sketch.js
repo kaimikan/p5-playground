@@ -37,6 +37,7 @@ let paused = false;
 let bestEver = 0;
 let history = [];
 let startPos, startHeading;
+let leader = null; // the highlighted car — sticky until it crashes
 
 const ACCENT = '#ed225d';
 
@@ -90,6 +91,7 @@ function reset() {
 
 function resetWorld() {
   frames = 0;
+  leader = null;
   for (const car of cars) car.respawn();
 }
 
@@ -390,12 +392,16 @@ function drawLoop(pts) {
 }
 
 function drawCars() {
-  let best = null;
-  for (const car of cars) {
-    if (car.alive && (!best || car.fitness > best.fitness)) best = car;
+  // Follow one leader until it crashes, then hand off to the current
+  // front-runner — steadier to watch than re-picking the max every frame.
+  if (!leader || !leader.alive) {
+    leader = null;
+    for (const car of cars) {
+      if (car.alive && (!leader || car.fitness > leader.fitness)) leader = car;
+    }
   }
-  for (const car of cars) if (car !== best) car.show(false);
-  if (best) best.show(true);
+  for (const car of cars) if (car !== leader) car.show(false);
+  if (leader) leader.show(true);
 }
 
 function drawHud() {

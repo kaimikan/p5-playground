@@ -479,6 +479,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         max-width: 46rem;
+        cursor: help; /* full text shows in the title tooltip on hover */
       }
 
       .viewer-actions {
@@ -1010,6 +1011,7 @@
         vCat.textContent = catName(s.cat);
         vTitle.textContent = s.title;
         vDesc.textContent = s.desc;
+        vDesc.title = s.desc; // full text on hover when the line is truncated
         vOpen.href = s.dir + '/index.html';
         vFrame.title = s.title;
         // Hide the sketch's own back-link inside the frame — the overlay has

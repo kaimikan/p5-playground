@@ -251,6 +251,7 @@ function drawHud() {
       : 0;
   push();
   textFont('monospace');
+  textAlign(LEFT, BASELINE); // drawGrid leaves textAlign at CENTER
   textSize(13);
   const x = 14;
   let y = 24;
