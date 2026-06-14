@@ -1,5 +1,6 @@
 let button;
 let sound;
+let gif; // the holy-moly emoji (animated gif)
 let isPlaying = false; // Track if the sound is playing
 let width = 700,
   height = 500;
@@ -9,6 +10,7 @@ let quirks = []; // Store random visuals
 function preload() {
   sound = loadSound('sound.mp3');
   sound.setVolume(0.1);
+  gif = loadImage('holy-moly.gif'); // p5 1.10 animates gifs on the canvas
 }
 
 function setup() {
@@ -30,17 +32,21 @@ function setup() {
 function draw() {
   background(220);
 
-  // Display instructions
-  fill(0);
-  textAlign(CENTER, CENTER);
-  textSize(24);
-  text('Press the button', width / 2, height / 4);
-
-  // Draw quirky visuals if the sound is playing
   if (isPlaying) {
+    // chaotic confetti behind the emoji
     for (let quirk of quirks) {
       quirk.show();
     }
+    // the holy-moly emoji, front and centre, animating in time with the sound
+    imageMode(CENTER);
+    const s = 420;
+    image(gif, width / 2, height / 2, s, s);
+  } else {
+    // Display instructions
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(24);
+    text('Press the button', width / 2, height / 4);
   }
 }
 
@@ -48,13 +54,15 @@ function playSound() {
   if (!isPlaying) {
     sound.play(); // Play the sound
     isPlaying = true;
-    styleButton('red', false); // Change to "pressed" style
+    if (gif.reset) gif.reset(); // restart the gif loop with the sound
+    button.hide(); // step aside so the emoji is unobstructed
     generateQuirks(); // Generate quirky visuals
   }
 }
 
 function resetButton() {
   isPlaying = false; // Reset the playing state
+  button.show();
   styleButton('darkred', true); // Reset to original style
   quirks = []; // Clear the visuals
 }
