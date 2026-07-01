@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shape Dither</title>
+    <link rel="stylesheet" href="../sketch-style.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="../p5/p5.min.js"></script>
+    <script src="sketch.js"></script>
+  </head>
+
+  <body>
+    <h3 id="back-to-main-page">
+      <a href="../index.html">◄ Back to Navigation</a>
+    </h3>
+    <main id="tool">
+      <div id="canvas-holder"></div>
+
+      <aside id="panel">
+        <h2>Shape Dither</h2>
+
+        <label class="row">
+          <span>Image / video</span>
+          <input type="file" id="media-upload" accept="image/*,video/*" />
+        </label>
+        <button id="play-pause" hidden>Pause</button>
+
+        <label class="row">
+          <span>Aspect</span>
+          <select id="aspect">
+            <option value="original">Original</option>
+            <option value="square">1 : 1</option>
+          </select>
+        </label>
+
+        <label class="row">
+          <span>Grid <em id="grid-val">48</em></span>
+          <input type="range" id="grid" min="8" max="160" step="1" value="48" />
+        </label>
+
+        <label class="row">
+          <span>Background</span>
+          <input type="color" id="bg" value="#101010" />
+        </label>
+
+        <label class="row">
+          <span>Invert</span>
+          <input type="checkbox" id="invert" />
+        </label>
+
+        <label class="row">
+          <span>Min scale <em id="min-scale-val">55%</em></span>
+          <input type="range" id="min-scale" min="10" max="150" value="55" />
+        </label>
+
+        <label class="row">
+          <span>Max scale <em id="max-scale-val">100%</em></span>
+          <input type="range" id="max-scale" min="10" max="150" value="100" />
+        </label>
+
+        <label class="row">
+          <span>Rotation (90° snap)</span>
+          <select id="rotation">
+            <option value="0">0°</option>
+            <option value="90">90°</option>
+            <option value="180">180°</option>
+            <option value="270">270°</option>
+            <option value="random">Random per cell</option>
+          </select>
+        </label>
+
+        <div class="section-head">
+          <span>Levels · shadow → highlight</span>
+          <label class="mini-upload">
+            Upload 7 SVGs
+            <input type="file" id="svg-multi" accept=".svg,image/svg+xml" multiple />
+          </label>
+        </div>
+        <div id="slots"></div>
+
+        <button id="download">Download PNG</button>
+      </aside>
+    </main>
+  </body>
+</html>

@@ -110,6 +110,7 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Rendering Raycasting** — pseudo-3D first-person view from 2D raycasting
 - **Self-Driving Car** — cars with sensor rays and neural-net brains evolve to drive a track without crashing (neuroevolution)
 - **Rotating Bricks** — a row of 3D bricks; drag to rotate, scroll to zoom
+- **Shape Dither** — dither an image or video into a grid of SVG glyphs: 7 brightness levels with custom shapes, colors, scale, and 90°-snapped rotation
 - **Smart Rockets** — genetic algorithm evolving rockets toward a target
 - **Snowflakes** — snow drifting over a night-blue gradient sky
 - **Soft Body** — springy soft-body blob that follows the mouse

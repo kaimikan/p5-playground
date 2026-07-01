@@ -1,0 +1,150 @@
+#tool {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+#canvas-holder canvas {
+  display: block;
+}
+
+#panel {
+  width: 280px;
+  max-height: 92vh;
+  overflow-y: auto;
+  color: #bdbdbd;
+  font-size: 13px;
+  padding-right: 4px;
+}
+
+#panel h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #e8e8e8;
+}
+
+#panel .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 9px 0;
+}
+
+#panel .row > span {
+  white-space: nowrap;
+}
+
+#panel .row em {
+  font-style: normal;
+  color: #7d7d7d;
+}
+
+#panel input[type='range'] {
+  flex: 1;
+  min-width: 0;
+  accent-color: #ed225d;
+}
+
+#panel input[type='checkbox'] {
+  accent-color: #ed225d;
+}
+
+#panel select,
+#panel button {
+  background: #212121;
+  color: #bdbdbd;
+  border: 1px solid #383838;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+#panel input[type='color'] {
+  width: 42px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #383838;
+  border-radius: 4px;
+  background: #212121;
+}
+
+#panel input[type='file'] {
+  max-width: 160px;
+  font-size: 11px;
+  color: #7d7d7d;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0 6px;
+  padding-top: 12px;
+  border-top: 1px solid #2c2c2c;
+  color: #e8e8e8;
+}
+
+.mini-upload {
+  background: #212121;
+  border: 1px solid #383838;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.mini-upload:hover {
+  border-color: #ed225d;
+}
+
+.mini-upload input {
+  display: none;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+.slot .slot-label {
+  width: 84px;
+  color: #7d7d7d;
+  white-space: nowrap;
+}
+
+.slot canvas {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #2c2c2c;
+  border-radius: 3px;
+  flex: none;
+}
+
+.slot input[type='color'] {
+  width: 34px;
+  height: 22px;
+}
+
+#download,
+#play-pause {
+  width: 100%;
+  padding: 7px 0;
+  cursor: pointer;
+}
+
+#download {
+  margin-top: 16px;
+}
+
+#play-pause {
+  margin: 2px 0 6px;
+}
+
+#download:hover,
+#play-pause:hover {
+  border-color: #ed225d;
+}
