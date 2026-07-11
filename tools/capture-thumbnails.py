@@ -62,6 +62,8 @@ RECIPES = {
         (0.5, 0.45)]},
     "soft-body": {"seconds": 2.5, "move": [
         (0.5, 0.5), (0.68, 0.42), (0.38, 0.58), (0.58, 0.48), (0.5, 0.55)]},
+    # skip through all six construction stages to the completed figure
+    "sacred-geometry": {"seconds": 2, "keys": ["ArrowRight"] * 6},
 }
 
 
@@ -214,6 +216,11 @@ def keypress(k):
     if k == " ":
         p = {"key": " ", "code": "Space", "windowsVirtualKeyCode": 32,
              "nativeVirtualKeyCode": 32}
+    elif k.startswith("Arrow"):
+        vk = {"ArrowLeft": 37, "ArrowUp": 38,
+              "ArrowRight": 39, "ArrowDown": 40}[k]
+        p = {"key": k, "code": k, "windowsVirtualKeyCode": vk,
+             "nativeVirtualKeyCode": vk}
     else:
         up = k.upper()
         p = {"key": k, "code": "Key" + up,

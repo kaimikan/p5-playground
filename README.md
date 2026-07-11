@@ -81,6 +81,7 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Fractal Trees (Recursive)** — recursive fractal tree with controllable branch angle
 - **Gabriel's Horn** — the infinite-surface horn in 3D with drag-to-rotate
 - **Game of Life** — Conway's Game of Life from a random seed
+- **Gravity Chimes** — a pendulum wave of bouncing balls, each under its own gravity, chiming pentatonic notes as they phase in and out of sync
 - **Holy Moly** — a mysterious button that plays a sound and spawns visual quirks
 - **Howard** — green-screen (chroma key) video experiment with a backing tune
 - **Image Evolution** — the "evolve the Mona Lisa" demo; translucent triangles mutate into a target image by keeping only what helps
@@ -108,6 +109,7 @@ python tools/howard-thumbnail.py     # Howard's poster (H.264; built with ffmpeg
 - **Random Walker** — a single random walker leaving a dotted trail
 - **Random Walker 2** — fifty grid-snapped walkers with fading trails
 - **Rendering Raycasting** — pseudo-3D first-person view from 2D raycasting
+- **Sacred Geometry** — compass-and-straightedge construction, animated: vesica piscis → seed of life → flower of life → Metatron's cube
 - **Self-Driving Car** — cars with sensor rays and neural-net brains evolve to drive a track without crashing (neuroevolution)
 - **Rotating Bricks** — a row of 3D bricks; drag to rotate, scroll to zoom
 - **Shape Dither** — dither an image or video into a grid of SVG glyphs: 7 brightness levels with custom shapes, colors, scale, and 90°-snapped rotation
